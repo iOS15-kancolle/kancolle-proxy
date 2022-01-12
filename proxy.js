@@ -95,7 +95,7 @@ proxy.on('proxyReq', (proxyReq) => {
 })
 
 proxy.on('proxyRes', (proxyRes) => {
-      console.log(proxyRes)
+      console.log(proxyRes.body)
       
       switch(proxyRes.url){
         //入渠開始
