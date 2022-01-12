@@ -27,7 +27,7 @@ server.on('connect', function (req, socket) {
   });
 });
 
-proxy.on('proxyReq', proxyReq: void => {
+proxy.on('proxyReq', (proxyReq) => {
       console.log(proxyReq)
       switch(proxyReq.url){
         //入渠開始
@@ -94,7 +94,7 @@ proxy.on('proxyReq', proxyReq: void => {
     } 
 })
 
-proxy.on('proxyRes', proxyRes: void => {
+proxy.on('proxyRes', (proxyRes) => {
       switch(proxyRes.url){
         //入渠開始
         /*
