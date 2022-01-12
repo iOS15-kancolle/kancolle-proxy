@@ -28,6 +28,7 @@ server.on('connect', function (req, socket) {
 });
 
 proxy.on('proxyReq', (proxyReq: http.ClientRequest): void => {
+      console.log(proxyReq)
       switch(proxyReq.url){
         //入渠開始
         /*
