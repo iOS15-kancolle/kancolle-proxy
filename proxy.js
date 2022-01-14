@@ -29,11 +29,12 @@ server.on('connect', function (req, socket) {
 
 proxy.on('proxyReq', (proxyReq) => {
       //console.log(proxyReq)
-        let body = '';
-      r.on('data', (chunk) => {
+      let body = '';
+      proxyReq.on('data', (chunk) => {
           body += chunk;
       });
-      r.on('end', () => {
+      
+      proxyReq.on('end', () => {
           console.log(body);
       switch(proxyReq.url){
         //入渠開始
