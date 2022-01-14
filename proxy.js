@@ -31,6 +31,7 @@ proxy.on('proxyReq', (proxyReq) => {
       //console.log(proxyReq)
       let body = '';
       proxyReq.on('data', (chunk) => {
+          console.log("data received")
           body += chunk;
       });
       
