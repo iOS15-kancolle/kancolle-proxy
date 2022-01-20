@@ -37,9 +37,8 @@ server.on('connect', function (req, socket) {
 
 proxy.on('proxyRes', (proxyRes, req, res, options) => { 
       var data = "";
-      proxyRes.on('data', function(data) {
-          data = data.toString('utf-8');
-          data += data;
+      proxyRes.on('data', function(chunk) {
+          data += chunk;
       });
       proxyRes.on('end', function () {
           console.log(data);
