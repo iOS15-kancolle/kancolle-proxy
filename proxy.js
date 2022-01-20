@@ -64,6 +64,7 @@ function dataparse(url,data,isRes){
     //console.log("no data");
     return;
   }
+　if(!url.match(/kcsapi/)) return;
   data = data.split("&");
     var arraydata = {};
     arraydata["url"] = url;
