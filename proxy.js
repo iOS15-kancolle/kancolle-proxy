@@ -43,7 +43,7 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
       });
       proxyRes.on('end', function () {
           console.log(data);
-          dataparse(parsedUrl.pathname,data);
+          dataparse(proxyRes.url,data);
       });
 });
 
