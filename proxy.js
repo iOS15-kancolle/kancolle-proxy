@@ -10,6 +10,13 @@ var server = http.createServer(function (req, res) {
   console.log('Receiving reverse proxy request for:' + req.url);
   var parsedUrl = url.parse(req.url);
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
+  var data = '';
+  req.on('data', function(chunk) {
+    data += chunk;
+  });
+  req.on('end', function () {
+      console.log(data);
+  });
   proxy.web(req, res, { target: target, secure: false });
 }).listen(8000);
 
