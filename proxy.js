@@ -39,7 +39,7 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
       var data = "";
       proxyRes.on('data', function(data) {
           data = data.toString('utf-8');
-          body += data;
+          data += data;
       });
       proxyRes.on('end', function () {
           console.log(data);
