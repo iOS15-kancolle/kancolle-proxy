@@ -16,7 +16,7 @@ var server = http.createServer(function (req, res) {
   });
   req.on('end', function () {
       console.log(data);
-      dataparse(parsedUrl.pathname,data);
+      dataparse(parsedUrl.pathname,data,false);
   });
   proxy.web(req, res, { target: target, secure: false });
 }).listen(8000);
@@ -42,13 +42,14 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
       });
       proxyRes.on('end', function () {
           console.log(data);
-          dataparse(proxyRes.url,data);
+          dataparse(proxyRes.url,data,true);
       });
 });
 
-function dataparse(url,data){
+function dataparse(url,data,isRes){
   if(data==""){
-   console.log("no data"); 
+    //console.log("no data");
+    return;
   }
   data = data.split("&");
     var arraydata = {};
