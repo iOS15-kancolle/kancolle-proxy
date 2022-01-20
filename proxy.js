@@ -42,6 +42,7 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
           data += chunk;
       });
       proxyRes.on('end', function () {
+	  console.log('Receiving reverse proxy response for:' + proxyRes.url);
 	  if(!proxyRes.url.match(/kcsapi/)) return;
           console.log(data);
           dataparse(proxyRes.url,data,true);
