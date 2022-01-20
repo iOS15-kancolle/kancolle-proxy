@@ -35,6 +35,17 @@ server.on('connect', function (req, socket) {
   });
 });
 
+proxy.on('proxyRes', (proxyRes, req, res, options) => { 
+  var data = '';
+  res.on('data', function(chunk) {
+    data += chunk;
+  });
+  res.on('end', function () {
+      console.log(data);
+      dataparse(parsedUrl.pathname,data);
+  });
+});
+
 function dataparse(url,data){
   if(data==""){
    console.log("no data"); 
