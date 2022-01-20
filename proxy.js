@@ -15,6 +15,7 @@ var server = http.createServer(function (req, res) {
     data += chunk;
   });
   req.on('end', function () {
+      if(!parsedUrl.pathname.match(/kcsapi/)) return;
       console.log(data);
       dataparse(parsedUrl.pathname,data,false);
   });
@@ -41,6 +42,7 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
           data += chunk;
       });
       proxyRes.on('end', function () {
+	  if(!proxyRes.url.match(/kcsapi/)) return;
           console.log(data);
           dataparse(proxyRes.url,data,true);
       });
