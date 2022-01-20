@@ -36,14 +36,15 @@ server.on('connect', function (req, socket) {
 });
 
 proxy.on('proxyRes', (proxyRes, req, res, options) => { 
-  var data = '';
-  req.on('data', function(chunk) {
-    data += chunk;
-  });
-  req.on('end', function () {
-      console.log(data);
-      dataparse(parsedUrl.pathname,data);
-  });
+      var data = "";
+      proxyRes.on('data', function(data) {
+          data = data.toString('utf-8');
+          body += data;
+      });
+      proxyRes.on('end', function () {
+          console.log(data);
+          dataparse(parsedUrl.pathname,data);
+      });
 });
 
 function dataparse(url,data){
