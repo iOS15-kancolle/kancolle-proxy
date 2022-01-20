@@ -47,6 +47,7 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
 });
 
 var unicodeUnescape = function(str) {
+	if(str==undefined||str==null)return "";
 	var result = '', strs = str.match(/\\u.{4}/ig);
 
 	if (!strs) return '';
