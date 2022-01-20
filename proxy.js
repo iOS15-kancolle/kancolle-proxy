@@ -42,10 +42,10 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
           data += chunk;
       });
       proxyRes.on('end', function () {
-	  console.log('Receiving reverse proxy response for:' + proxyRes.url);
-	  if(!proxyRes.url.match(/kcsapi/)) return;
+	  console.log('Receiving reverse proxy response for:' + req.url);
+	  if(!req.url.match(/kcsapi/)) return;
           console.log(data);
-          dataparse(proxyRes.url,data,true);
+          dataparse(req.url,data,true);
       });
 });
 
