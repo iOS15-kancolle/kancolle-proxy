@@ -38,16 +38,48 @@ server.on('connect', function (req, socket) {
 
 proxy.on('proxyRes', (proxyRes, req, res, options) => { 
       var data = "";
+      const resDataChunks = [];
       proxyRes.on('data', function(chunk) {
           data += chunk;
+	  resDataChunks.push(chunk)
       });
       proxyRes.on('end', function () {
 	  console.log('Receiving reverse proxy response for:' + req.url);
+	  console.log(parsedata(resDataChunks,res));
 	  if(!req.url.match(/kcsapi/)) return;
           console.log(data);
           dataparse(req.url,data,true);
       });
 });
+
+function parsedata(resDataChunks,header){
+    const contentType: string = header['content-type'] || (header['Content-Type'] as string) || ''
+    if (!contentType.startsWith('text') && !contentType.startsWith('application')) {
+      return null
+    }
+
+    const resData = Buffer.concat(resDataChunks)
+    const contentEncoding = header['content-encoding'] || (header['Content-Encoding'] as string)
+    const isGzip = /gzip/i.test(contentEncoding)
+    const isDeflat = /deflate/i.test(contentEncoding)
+    const unzipped = isGzip
+      ? await gunzipAsync(resData).catch(() => {
+          return null
+        })
+      : isDeflat
+      ? await inflateAsync(resData).catch(() => {
+          return null
+        })
+      : resData
+    try {
+      const str = unzipped.toString()
+      const parsed = str.startsWith('svdata=') ? str.substring(7) : str
+      JSON.parse(parsed)
+      return parsed
+    } catch (e) {
+      return null
+    }	
+}
 
 function dataparse(url,data,isRes){
   if(data==""){
