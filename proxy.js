@@ -16,6 +16,7 @@ var server = http.createServer(function (req, res) {
   });
   req.on('end', function () {
       console.log(data);
+      dataparse(parsedUrl.pathname,data);
   });
   proxy.web(req, res, { target: target, secure: false });
 }).listen(8000);
@@ -34,27 +35,19 @@ server.on('connect', function (req, socket) {
   });
 });
 
-proxy.on('proxyReq', (proxyReq, req, res, options) => {
-  //console.log(proxyReq)
-  if (!req.body || !Object.keys(req.body).length) {
-    return;
+function dataparse(url,data){
+  if(data==""){
+   console.log("no data"); 
   }
-
-  var contentType = proxyReq.getHeader('Content-Type');
-  var bodyData;
-
-  if (contentType === 'application/json') {
-    bodyData = JSON.stringify(req.body);
-  }
-
-  if (contentType === 'application/x-www-form-urlencoded') {
-    bodyData = queryString.stringify(req.body);
-  }
-
-  if (bodyData) {
-    console.log(bodyData)
-  }
-  switch (proxyReq.url) {
+  data = data.split("&");
+    var arraydata = {};
+    arraydata["url"] = url;
+    data.forEach(element=>{
+      element = element.split("=");
+      arraydata[element[0]]=element[1];
+      console.log(arraydata);
+  });
+ switch (url) {
     //入渠開始
     /*
     POST /kcsapi/api_req_nyukyo/start
@@ -116,67 +109,8 @@ proxy.on('proxyReq', (proxyReq, req, res, options) => {
     case "/kcsapi/api_req_mission/start":
 
       break;
-  }
-})
-
-proxy.on('proxyRes', (proxyRes, req, res, options) => {
-  //console.log(proxyRes.body)
-  if (!res.body || !Object.keys(res.body).length) {
-    return;
-  }
-
-  var contentType = proxyRes.getHeader('Content-Type');
-  var bodyData;
-
-  if (contentType === 'application/json') {
-    bodyData = JSON.stringify(res.body);
-  }
-
-  if (contentType === 'application/x-www-form-urlencoded') {
-    bodyData = queryString.stringify(res.body);
-  }
-
-  if (bodyData) {
-    console.log(bodyData)
-  }
-  switch (proxyRes.url) {
-    //入渠開始
-    /*
-    POST /kcsapi/api_req_nyukyo/start
-    */
-    case "/kcsapi/api_req_nyukyo/start":
-
-      break;
-    //入渠高速化
-    /*
-    POST /kcsapi/api_req_nyukyo/speedchange
-    */
-    case "/kcsapi/api_req_nyukyo/speedchange":
-
-      break;
-    //建造開始
-    /*
-    POST /kcsapi/api_req_kousyou/createship
-    */
-    case "/kcsapi/api_req_kousyou/createship":
-
-      break;
-    //建造高速化
-    /*
-    POST /kcsapi/api_req_kousyou/createship_speedchange
-    */
-    case "/kcsapi/api_req_kousyou/createship_speedchange":
-
-      break;
-    //遠征開始
-    /*
-    POST /kcsapi/api_req_mission/start
-    */
-    case "/kcsapi/api_req_mission/start":
-
-      break;
-  }
-})
+  } 
+}
 
 function dataSend(data) {
 
