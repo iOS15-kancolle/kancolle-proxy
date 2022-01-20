@@ -59,7 +59,7 @@ function dataparse(url,data,isRes){
     arraydata["url"] = url;
     data.forEach(element=>{
       element = element.split("=");
-      arraydata[element[0])=element[1];
+      arraydata[element[0]] = element[1];
       console.log(arraydata);
   });
  switch (url) {
