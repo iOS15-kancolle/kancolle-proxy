@@ -48,19 +48,6 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
       });
 });
 
-var unicodeUnescape = function(str) {
-	if(str==undefined||str==null)return "";
-	var result = '', strs = str.match(/\\u.{4}/ig);
-
-	if (!strs) return '';
-
-	for (var i = 0, len = strs.length; i < len; i++) {
-		result += String.fromCharCode(strs[i].replace('\\u', '0x'));
-	}
-
-	return result;
-};
-
 function dataparse(url,data,isRes){
   if(data==""){
     //console.log("no data");
@@ -72,7 +59,7 @@ function dataparse(url,data,isRes){
     arraydata["url"] = url;
     data.forEach(element=>{
       element = element.split("=");
-      arraydata[unicodeUnescape(element[0])]=unicodeUnescape(element[1]);
+      arraydata[element[0])=element[1];
       console.log(arraydata);
   });
  switch (url) {
