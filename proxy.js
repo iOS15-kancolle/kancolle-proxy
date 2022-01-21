@@ -65,15 +65,17 @@ function parsedata(resDataChunks,header){
     const contentEncoding = header['content-encoding'] || (header['Content-Encoding'].toString())
     const isGzip = /gzip/i.test(contentEncoding)
     const isDeflat = /deflate/i.test(contentEncoding)
-    const unzipped = isGzip
-      ? await gunzipAsync(resData).catch(() => {
+    if(isGzip){
+	  const unzipped = await gunzipAsync(resData).catch(() => {
           return null
         })
-      : isDeflat
-      ? await inflateAsync(resData).catch(() => {
+    }else if(isDeflat){
+    const unzipped = await inflateAsync(resData).catch(() => {
           return null
         })
-      : resData
+    }else{
+      const unzipped = resData;
+    }
     try {
       const str = unzipped.toString()
       const parsed = str.startsWith('svdata=') ? str.substring(7) : str
