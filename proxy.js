@@ -62,7 +62,7 @@ function parsedata(resDataChunks,header){
     const gunzipAsync = util.promisify(gunzip)
     const inflateAsync = util.promisify(inflate)
     const resData = Buffer.concat(resDataChunks)
-    const contentEncoding = header['content-encoding'] || (header['Content-Encoding'] as string)
+    const contentEncoding = header['content-encoding'] || (header['Content-Encoding'].toString())
     const isGzip = /gzip/i.test(contentEncoding)
     const isDeflat = /deflate/i.test(contentEncoding)
     const unzipped = isGzip
