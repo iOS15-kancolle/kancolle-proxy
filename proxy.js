@@ -55,7 +55,7 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
 });
 
 function parsedata(resDataChunks,header){
-    const contentType: string = header['content-type'] || (header['Content-Type'] as string) || ''
+    const contentType = header['content-type'] || (header['Content-Type'] as string) || ''
     if (!contentType.startsWith('text') && !contentType.startsWith('application')) {
       return null
     }
