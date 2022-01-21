@@ -54,7 +54,7 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
       });
 });
 
-function parsedata(resDataChunks,header){
+async function parsedata(resDataChunks,header){
     const contentType = header['content-type'] || (header['Content-Type'].toString()) || ''
     if (!contentType.startsWith('text') && !contentType.startsWith('application')) {
       return null
