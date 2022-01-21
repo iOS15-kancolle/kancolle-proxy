@@ -17,7 +17,7 @@ var server = http.createServer(function (req, res) {
   });
   req.on('end', function () {
       if(!parsedUrl.pathname.match(/kcsapi/)) return;
-      console.log(data);
+      //console.log(data);
       dataparse(parsedUrl.pathname,data,false);
   });
   proxy.web(req, res, { target: target, secure: false });
@@ -47,9 +47,9 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
       proxyRes.on('end', function () {
 	  console.log('Receiving reverse proxy response for:' + req.url);
 	  if(!req.url.match(/kcsapi/)) return;
-          //console.log(data);
+          console.log(req.headers);
 	  console.log(parsedata(resDataChunks,req.headers));
-          dataparse(req.url,data,true);
+          //dataparse(req.url,data,true);
       });
 });
 
@@ -96,9 +96,9 @@ function dataparse(url,data,isRes){
     arraydata["url"] = url;
     data.forEach(element=>{
       element = element.split("=");
-      arraydata[element[0]] = element[1];
-      console.log(arraydata);
+      arraydata[element[0]] = element[1]; 
   });
+ console.log(arraydata);
  switch (url) {
     //入渠開始
     /*
