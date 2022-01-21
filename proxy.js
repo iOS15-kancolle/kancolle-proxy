@@ -2,7 +2,8 @@ var http = require('http'),
   net = require('net'),
   httpProxy = require('http-proxy'),
   url = require('url'),
-  util = require('util');
+  util = require('util'),
+  { gunzip, inflate } = require('zlib');
 
 var proxy = httpProxy.createServer();
 
@@ -47,7 +48,8 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
 	  console.log('Receiving reverse proxy response for:' + req.url);
 	  console.log(parsedata(resDataChunks,res));
 	  if(!req.url.match(/kcsapi/)) return;
-          console.log(data);
+          //console.log(data);
+	  console.log(parsedata(resDataChunks,res));
           dataparse(req.url,data,true);
       });
 });
@@ -57,7 +59,8 @@ function parsedata(resDataChunks,header){
     if (!contentType.startsWith('text') && !contentType.startsWith('application')) {
       return null
     }
-
+    const gunzipAsync = util.promisify(gunzip)
+    const inflateAsync = util.promisify(inflate)
     const resData = Buffer.concat(resDataChunks)
     const contentEncoding = header['content-encoding'] || (header['Content-Encoding'] as string)
     const isGzip = /gzip/i.test(contentEncoding)
