@@ -47,9 +47,8 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
       proxyRes.on('end', function () {
 	  console.log('Receiving reverse proxy response for:' + req.url);
 	  if(!req.url.match(/kcsapi/)) return;
-	        const { statusCode, headers } = res
-          console.log(headers);
-	        console.log(parsedata(resDataChunks,headers));
+	        console.log(res.headers);
+	        console.log(parsedata(resDataChunks,res.headers));
           //dataparse(req.url,data,true);
       });
 });
@@ -62,7 +61,7 @@ async function parsedata(resDataChunks,header){
     const gunzipAsync = util.promisify(gunzip)
     const inflateAsync = util.promisify(inflate)
     const resData = Buffer.concat(resDataChunks)
-    const contentEncoding = header['content-encoding'] || (header['Content-Encoding'].toString())
+    const contentEncoding = header['Content-Encoding'] || (header['Content-Encoding'].toString())
     const isGzip = /gzip/i.test(contentEncoding)
     const isDeflat = /deflate/i.test(contentEncoding)
     if(isGzip){
