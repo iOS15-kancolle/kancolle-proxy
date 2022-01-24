@@ -42,7 +42,7 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
       const resDataChunks = [];
       proxyRes.on('data', function(chunk) {
           data += chunk;
-	  resDataChunks.push(chunk)
+	        resDataChunks.push(chunk)
       });
       proxyRes.on('end', function () {
 	  console.log('Receiving reverse proxy response for:' + req.url);
@@ -54,14 +54,14 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
 });
 
 async function parsedata(resDataChunks,header){
-    /*const contentType = header['content-type'] || (header['Content-Type'].toString()) || ''
+    const contentType = header['content-type'] || ''
     if (!contentType.startsWith('text') && !contentType.startsWith('application')) {
       return null
-    }*/
+    }
     const gunzipAsync = util.promisify(gunzip)
     const inflateAsync = util.promisify(inflate)
     const resData = Buffer.concat(resDataChunks)
-    const contentEncoding = header['Content-Encoding'] || (header['Content-Encoding'].toString())
+    const contentEncoding = header['Content-Encoding']
     const isGzip = /gzip/i.test(contentEncoding)
     const isDeflat = /deflate/i.test(contentEncoding)
     if(isGzip){
