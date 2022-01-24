@@ -55,10 +55,10 @@ proxy.on('proxyRes', (proxyRes, req, res, options) => {
 });
 
 async function parsedata(resDataChunks,header){
-    const contentType = header['content-type'] || (header['Content-Type'].toString()) || ''
+    /*const contentType = header['content-type'] || (header['Content-Type'].toString()) || ''
     if (!contentType.startsWith('text') && !contentType.startsWith('application')) {
       return null
-    }
+    }*/
     const gunzipAsync = util.promisify(gunzip)
     const inflateAsync = util.promisify(inflate)
     const resData = Buffer.concat(resDataChunks)
