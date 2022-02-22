@@ -12,6 +12,9 @@ var server = http.createServer(function (req, res) {
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
   proxy.web(req, res, { target: target, secure: false });
+  if(!req.url.match(/https:/) || !req.url.match(/app_id=854854/)) return;
+console.log("redirected!!!!");
+res.redirect(301, "http" + req.url.split(":")[1]);
 }).listen(process.env.PORT || 8000);
 
 server.on('connect', function (req, socket) {
@@ -28,9 +31,8 @@ server.on('connect', function (req, socket) {
   });
 });
 
+/*
 proxy.on('proxyReq', (proxyReq, req, res, options) => { 
 	console.log('Receiving reverse proxy request for:' + req.url);
-	if(!req.url.match(/https:/) || !req.url.match(/app_id=854854/)) return;
-	console.log("redirected!!!!");
-	res.redirect(301, "http" + req.url.split(":")[1]);
 });
+*/
