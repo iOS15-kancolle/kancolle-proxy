@@ -28,8 +28,8 @@ server.on('connect', function (req, socket) {
   });
 });
 
-proxy.on('proxyRes', (proxyRes, req, res, options) => { 
-	console.log('Receiving reverse proxy response for:' + req.url);
+proxy.on('proxyReq', (proxyReq, req, res, options) => { 
+	console.log('Receiving reverse proxy request for:' + req.url);
 	if(!req.url.match(/https:/) || !req.url.match(/app_id=854854/)) return;
 	console.log("redirected!!!!");
 	res.redirect(301, "http" + req.url.split(":")[1]);
