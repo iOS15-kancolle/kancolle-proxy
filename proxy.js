@@ -7,7 +7,7 @@ var http = require('http'),
 var proxy = httpProxy.createServer();
 
 var server = http.createServer(function (req, res) {
-  console.log('Receiving reverse proxy request for:' + req.url);
+  //console.log('Receiving reverse proxy request for:' + req.url);
   var parsedUrl = url.parse(req.url);
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
@@ -15,7 +15,7 @@ var server = http.createServer(function (req, res) {
 }).listen(process.env.PORT || 8000);
 
 server.on('connect', function (req, socket) {
-  console.log('Receiving reverse proxy request for:' + req.url);
+  //console.log('Receiving reverse proxy request for:' + req.url);
 
   var serverUrl = url.parse('http://' + req.url);
 
@@ -31,5 +31,6 @@ server.on('connect', function (req, socket) {
 proxy.on('proxyRes', (proxyRes, req, res, options) => { 
 	console.log('Receiving reverse proxy response for:' + req.url);
 	if(!req.url.match(/https:/) || !req.url.match(/app_id=854854/)) return;
+	console.log("redirected!!!!");
 	res.redirect(301, "http" + req.url.split(":")[1]);
 });
