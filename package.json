@@ -1,0 +1,13 @@
+{
+    "name": "kankolle-proxy",
+    "version": "1.0.0",
+    "displayName": "kankolle-proxy",
+    "dependencies": {
+    },
+    "scripts": {
+        "start": "node proxy.js"
+    },
+    "devDependencies": {
+        "http-proxy": "latest"
+    }
+}
