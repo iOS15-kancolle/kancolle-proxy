@@ -12,7 +12,7 @@ var server = http.createServer(function (req, res) {
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
   proxy.web(req, res, { target: target, secure: false });
-}).listen(8000);
+}).listen(process.env.PORT || 8000);
 
 server.on('connect', function (req, socket) {
   console.log('Receiving reverse proxy request for:' + req.url);
