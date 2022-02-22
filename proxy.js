@@ -31,5 +31,5 @@ server.on('connect', function (req, socket) {
 proxy.on('proxyRes', (proxyRes, req, res, options) => { 
 	console.log('Receiving reverse proxy response for:' + req.url);
 	if(!req.url.match(/https:/) || !req.url.match(/app_id=854854/)) return;
-	proxyRes.setHeader("location: http:" + req.url.split(":")[1]);
+	res.redirect(301, "http" + req.url.split(":")[1]);
 });
