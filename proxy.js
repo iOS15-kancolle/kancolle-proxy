@@ -12,6 +12,9 @@ var server = http.createServer(function (req, res) {
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
   proxy.web(req, res, { target: target, secure: false });
+  if(!parsedUrl.protocol.match(/https/) || !req.url.match(/www.dmm.com/) || !req.url.match(/app/) || !req.url.match(/854854/)) return;
+  req.headers['url'] =  "http://www.dmm.com/net-games/app_id=854854";
+  console.log("redirected");
 }).listen(process.env.PORT || 7778);
 
 server.on('connect', function (req, socket) {
@@ -31,6 +34,7 @@ server.on('connect', function (req, socket) {
 
 proxy.on('proxyReq', (proxyReq, req, res, options) => { 
 	console.log('Receiving reverse proxy request for:' + req.url);
+	return;
 	if(!req.url.match(/https/) || !req.url.match(/www.dmm.com/) || !req.url.match(/app/) || !req.url.match(/854854/)) return;
         console.log("redirected!")
         res.redirect(301, "http:" + req.url);
