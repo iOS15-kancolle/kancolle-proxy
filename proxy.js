@@ -15,7 +15,7 @@ var server = http.createServer(function (req, res) {
     req.headers['url'] =  "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/";
     console.log("redirected");
   }
-  proxy.web(req, res, { target: target, secure: false } , function(e) { console.log(e) });
+  proxy.web(req, res, { target: target, secure: false, enable: { xforward: true } } , function(e) { console.log(e) });
 }).listen(process.env.PORT || 7778);
 
 server.on('connect', function (req, socket) {
