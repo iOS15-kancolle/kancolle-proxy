@@ -7,7 +7,7 @@ var http = require('http'),
 var proxy = httpProxy.createServer();
 
 var server = http.createServer(function (req, res) {
-  //console.log('Receiving reverse proxy request for:' + req.url);
+  console.log('Receiving reverse proxy request for:' + req.url);
   var parsedUrl = url.parse(req.url);
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
