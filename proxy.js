@@ -12,9 +12,6 @@ var server = http.createServer(function (req, res) {
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
   proxy.web(req, res, { target: target, secure: false });
-  if(!parsedUrl.protocol.match(/https/) || !req.url.match(/www.dmm.com/) || !req.url.match(/app/) || !req.url.match(/854854/)) return;
-console.log("redirected!!!!");
-res.redirect(301, "http" + req.url.split(":")[1]);
 }).listen(process.env.PORT || 7778);
 
 server.on('connect', function (req, socket) {
@@ -29,6 +26,9 @@ server.on('connect', function (req, socket) {
     srvSocket.pipe(socket);
     socket.pipe(srvSocket);
   });
+  if(!parsedUrl.protocol.match(/https/) || !req.url.match(/www.dmm.com/) || !req.url.match(/app/) || !req.url.match(/854854/)) return;
+  console.log("redirected!!!!");
+  res.redirect(301, "http:" + req.url);
 });
 
 /*
