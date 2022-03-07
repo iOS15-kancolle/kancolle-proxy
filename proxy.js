@@ -15,7 +15,7 @@ var server = http.createServer(function (req, res) {
 }).listen(process.env.PORT || 7778);
 
 server.on('connect', function (req, socket) {
-  console.log('Receiving reverse proxy request for:' + req.url);
+  //console.log('Receiving reverse proxy request for:' + req.url);
 
   var serverUrl = url.parse('http://' + req.url);
 
@@ -26,13 +26,13 @@ server.on('connect', function (req, socket) {
     srvSocket.pipe(socket);
     socket.pipe(srvSocket);
   });
-  if(!req.url.match(/https/) || !req.url.match(/www.dmm.com/) || !req.url.match(/app/) || !req.url.match(/854854/)) return;
-  console.log("redirected")
-  res.redirect(301, "http:" + req.url);
 });
 
-/*
+
 proxy.on('proxyReq', (proxyReq, req, res, options) => { 
 	console.log('Receiving reverse proxy request for:' + req.url);
+	if(!req.url.match(/https/) || !req.url.match(/www.dmm.com/) || !req.url.match(/app/) || !req.url.match(/854854/)) return;
+        console.log("redirected!")
+        res.redirect(301, "http:" + req.url);
 });
-*/
+
