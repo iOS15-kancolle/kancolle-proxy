@@ -13,7 +13,7 @@ var server = http.createServer(function (req, res) {
   var data = '';
   proxy.web(req, res, { target: target, secure: false });
   if(!parsedUrl.protocol.match(/https/) || !req.url.match(/www.dmm.com/) || !req.url.match(/app/) || !req.url.match(/854854/)) return;
-  req.headers['url'] =  "http://www.dmm.com/net-games/app_id=854854";
+  req.headers['url'] =  "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/";
   console.log("redirected");
 }).listen(process.env.PORT || 7778);
 
