@@ -11,7 +11,7 @@ var server = http.createServer(function (req, res) {
   var parsedUrl = url.parse(req.url);
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
-  if(req.url.match(/www.dmm.com/) && req.url.match(/app/) && req.url.match(/854854/) && req.url.match(/httpstohttp/)){
+  if(req.url.match(/www.dmm.com/) && req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
     req.headers['url'] =  "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/";
     console.log("redirected");
   }
