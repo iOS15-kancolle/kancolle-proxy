@@ -45,7 +45,7 @@ var server = http.createServer(function (req, res) {
     return;
   }
   */
-  proxy.web(req, res, { target: target, ssl: true, secure: false, enable: { xforward: true } ,toProxy: true} , function(e) { console.log(e) });
+  proxy.web(req, res, { target: target, secure: false, enable: { xforward: true } ,toProxy: true} , function(e) { console.log(e) });
 }).listen(process.env.PORT || 7778);
 
 /*
