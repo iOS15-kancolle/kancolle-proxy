@@ -6,6 +6,23 @@ var http = require('http'),
 
 var proxy = httpProxy.createServer();
 
+var regex_hostport = /^([^:]+)(:([0-9]+))?$/;
+
+var getHostPortFromString = function (hostString, defaultPort) {
+  var host = hostString;
+  var port = defaultPort;
+
+  var result = regex_hostport.exec(hostString);
+  if (result != null) {
+    host = result[1];
+    if (result[2] != null) {
+      port = result[3];
+    }
+  }
+
+  return ( [host, port] );
+};
+
 var server = http.createServer(function (req, res) {
   console.log('Receiving reverse proxy request for:' + req.url);
   var parsedUrl = url.parse(req.url);
