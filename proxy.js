@@ -1,4 +1,4 @@
-var http = require('http'),
+var http = require('https'),
   net = require('net'),
   httpProxy = require('http-proxy'),
   url = require('url'),
@@ -23,7 +23,14 @@ var getHostPortFromString = function (hostString, defaultPort) {
   return ( [host, port] );
 };
 
-var server = http.createServer(function (req, res) {
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+var server = http.createServer(options,function (req, res) {
   console.log('Receiving reverse proxy request for:' + req.url);
   console.log(req)
   console.log("----------------------")
