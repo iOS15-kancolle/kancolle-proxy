@@ -64,6 +64,7 @@ server.on('connect', function (req, socket) {
 server.addListener('connect', function (req, socket, bodyhead) {
   var hostPort = getHostPortFromString(req.url, 443);
   var hostDomain = hostPort[0];
+  var port = parseInt(hostPort[1]);
   if(hostDomain!="www.dmm.com")return;
   console.log("Proxying HTTPS request for:", hostDomain, port);
 　console.log('Receiving reverse proxy request for:' + req.url);
