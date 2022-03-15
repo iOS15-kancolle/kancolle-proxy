@@ -30,7 +30,7 @@ const options = {
 };
 var server = http.createServer(function (req, res) {
   console.log('Receiving reverse proxy request for:' + req.url);
-  console.log(req)
+  console.log(req.path)
   console.log("----------------------")
   var parsedUrl = url.parse(req.url);
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
@@ -57,6 +57,7 @@ server.on('connect', function (req, socket) {
 */
 
 server.on('connect', function (req, socket, bodyhead) {
+	/*
   var hostPort = getHostPortFromString(req.url, 443);
   var hostDomain = hostPort[0];
   var port = parseInt(hostPort[1]);
