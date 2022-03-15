@@ -25,6 +25,8 @@ var getHostPortFromString = function (hostString, defaultPort) {
 
 var server = http.createServer(function (req, res) {
   console.log('Receiving reverse proxy request for:' + req.url);
+  console.log(req)
+  console.log("----------------------")
   var parsedUrl = url.parse(req.url);
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
@@ -54,7 +56,8 @@ server.addListener('connect', function (req, socket, bodyhead) {
   var hostDomain = hostPort[0];
   var port = parseInt(hostPort[1]);
   console.log("Proxying HTTPS request for:", hostDomain, port);	
-  if(req.url.match(/www.dmm.com/) ){//&& req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
+	/*
+  if(req.url.match(/www.dmm.com/) && req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
     socket.writeHead(301, {
     'Location': 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/'
     });
@@ -62,6 +65,7 @@ server.addListener('connect', function (req, socket, bodyhead) {
     console.log("redirected");
     return;
   }
+  */
   var serverUrl = url.parse('https://' + req.url);
 
   var srvSocket = net.connect(serverUrl.port, serverUrl.hostname, function () {
