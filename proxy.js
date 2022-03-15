@@ -70,7 +70,7 @@ server.on('connect', function (req, socket, bodyhead) {
     return;
   }
   */
-  var serverUrl = url.parse('https://' + req.url);
+  var serverUrl = url.parse('http://' + req.url);
 
   var srvSocket = net.connect(serverUrl.port, serverUrl.hostname, function () {
     socket.write('HTTP/1.1 200 Connection Established\r\n' +
