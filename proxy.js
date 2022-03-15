@@ -4,7 +4,7 @@ var http = require('http'),
   url = require('url'),
   util = require('util');
 
-var proxy = httpProxy.createServer();
+var proxy = httpProxy.createServer({ssl:true});
 
 var regex_hostport = /^([^:]+)(:([0-9]+))?$/;
 
