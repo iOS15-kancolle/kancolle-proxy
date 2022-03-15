@@ -19,7 +19,12 @@ var server = http.createServer(function (req, res) {
     console.log("redirected");
     return;
   }
-  proxy.web(req, res, { target: target, secure: false, enable: { xforward: true } } , function(e) { console.log(e) });
+  proxy.web(req, res, { target: target,
+  ssl: {
+    key: fs.readFileSync('key.pem', 'utf8'),
+    cert: fs.readFileSync('cert.pem', 'utf8')
+  },
+  secure: true, enable: { xforward: true } } , function(e) { console.log(e) });
 }).listen(process.env.PORT || 7778);
 
 server.on('connect', function (req, socket) {
