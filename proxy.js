@@ -51,7 +51,7 @@ server.on('connect', function (req, socket) {
 });
 */
 
-server.addListener('connect', function (req, socket, bodyhead) {
+server.on('connect', function (req, socket, bodyhead) {
   var hostPort = getHostPortFromString(req.url, 443);
   var hostDomain = hostPort[0];
   var port = parseInt(hostPort[1]);
