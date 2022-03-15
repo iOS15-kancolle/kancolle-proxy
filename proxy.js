@@ -66,6 +66,7 @@ server.addListener('connect', function (req, socket, bodyhead) {
   var hostDomain = hostPort[0];
   var port = parseInt(hostPort[1]);
   console.log("Proxying HTTPS request for:", hostDomain, port);
+　console.log('Receiving reverse proxy request for:' + req.url);
   if(req.url.match(/www.dmm.com/) && req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
     socket.writeHead(301, {
     'Location': 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/'
