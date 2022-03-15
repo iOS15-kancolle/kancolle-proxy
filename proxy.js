@@ -56,16 +56,16 @@ server.on('connect', function (req, socket, bodyhead) {
   var hostDomain = hostPort[0];
   var port = parseInt(hostPort[1]);
   console.log("Proxying HTTPS request for:", hostDomain, port);	
-	/*
-  if(req.url.match(/www.dmm.com/) && req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
-    socket.writeHead(301, {
+	
+  if(req.url.match(/www.dmm.com/) ){//&& req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
+    socket.write(301, {
     'Location': 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/'
     });
     socket.end();
     console.log("redirected");
     return;
   }
-  */
+  
   var serverUrl = url.parse('https://' + req.url);
 
   var srvSocket = net.connect(serverUrl.port, serverUrl.hostname, function () {
