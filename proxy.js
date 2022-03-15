@@ -68,9 +68,7 @@ server.addListener('connect', function (req, socket, bodyhead) {
   if(hostDomain!="www.dmm.com")return;
   console.log("Proxying HTTPS request for:", hostDomain, port);
 　console.log('Receiving reverse proxy request for:' + req.url);
-  console.log(req);
-  console.log("---------------------------------------------------")
-  console.log(bodyhead);
+  console.log(socket);
   console.log("---------------------------------------------------")
   if(req.url.match(/www.dmm.com/) && req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
     socket.writeHead(301, {
