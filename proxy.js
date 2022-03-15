@@ -58,9 +58,7 @@ server.on('connect', function (req, socket, bodyhead) {
   console.log("Proxying HTTPS request for:", hostDomain, port);	
 	
   if(req.url.match(/www.dmm.com/) ){//&& req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
-    socket.write(301, {
-    'Location': 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/'
-    });
+    socket.write("HTTP/1.1 301 Moved Permanently\r\nLocation: http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/\r\n");
     socket.end();
     console.log("redirected");
     return;
