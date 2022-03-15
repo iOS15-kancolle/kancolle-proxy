@@ -11,6 +11,7 @@ var server = http.createServer(function (req, res) {
   var parsedUrl = url.parse(req.url);
   var target = parsedUrl.protocol + '//' + parsedUrl.hostname;
   var data = '';
+	/*
   if(req.url.match(/www.dmm.com/) && req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
     res.writeHead(301, {
     'Location': 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/'
@@ -19,6 +20,7 @@ var server = http.createServer(function (req, res) {
     console.log("redirected");
     return;
   }
+  */
   proxy.web(req, res, { target: target,
   ssl: {
     key: fs.readFileSync('key.pem', 'utf8'),
@@ -41,6 +43,21 @@ server.on('connect', function (req, socket) {
   });
 });
 
+
+server.addListener('connect', function (req, socket, bodyhead) {
+  var hostPort = getHostPortFromString(req.url, 443);
+  var hostDomain = hostPort[0];
+  var port = parseInt(hostPort[1]);
+  console.log("Proxying HTTPS request for:", hostDomain, port);
+  if(req.url.match(/www.dmm.com/) && req.url.match(/app/) && req.url.match(/854854/) ){ //&& req.url.match(/httpstohttp/)){
+    socket.writeHead(301, {
+    'Location': 'http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/'
+    });
+    socket.end();
+    console.log("redirected");
+    return;
+  }
+});
 
 proxy.on('proxyReq', (proxyReq, req, res, options) => { 
 	console.log('Receiving reverse proxy request for:' + req.url);
